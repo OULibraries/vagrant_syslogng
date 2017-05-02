@@ -5,76 +5,25 @@ environment_name: "vagrant"
 # Local credentials
 # additional shell accounts
 users:
-  - name: 'libacct'
+  - name: ''
     groups: 'wheel'
-    pubkey: 'ssh-rsa AAAAB3NzaC1yc2EAAAABJQAAAQEAtkaGGkonm3HJmRoupKgM0A04uZu3aPhFyWmyMWCHTk1TtDskTgO0krOgUKuxAB2G/d39Xz6oISL9+dQdZt5aEJK7WoHpkK8l8xXfrIJ8OiWuJ+IRygjjLsib8tVTRsEIvMrQUtnhGzVNM7lQNXaEviGmR+ZunH68fv/QpomR5qW/veLFsR0KQLnd8yoG2+Tm8EdYouDcUPTS1nr9XdPSWGcsvpDq48JdxSmtXXC/8NHfdhpmCMmoC/IXbFl7typeLd9gt7EFvqOLWEbysEF3hD6hMAV3MEWaDnhf25n2cUgdAvdk086REgg2bXx1dBdeSi+wq5MadfP80UuPuaN2lw== libacct@ou.edu'
+    pubkey: ''
 
 ssh_brokers:
   - alias: 'localhost'
     ip: '127.0.0.1'
     dn_suffix: 'localdomain'
 
-# Running somebody elses script so we check md5 and fail out if it changes
-gitlab_download_url: https://packages.gitlab.com/install/repositories/gitlab/gitlab-ce/script.rpm.sh
-gitlab_md5sum: 4cb77144fcb86897e819ce24384c0b55
+syslogng_server_ip: 10.255.255.10
+syslogng_dn_prefix: syslogng
+syslogng_dn_suffix: vagrant.localdomain
+syslogng_server_protocol: tls
+syslogng_server_port: 514
 
-# Installing the Community Edition (CE)
-gitlab_edition: "gitlab-ce"
+syslogng_client_prefix: syslogclient
+syslogng_client_suffix: vagrant.localdomain
+syslogng_client_cert: |
+  -----BEGIN CERTIFICATE-----
+  <paste client cert here>
+  -----END CERTIFICATE-----
 
-# Domain configuration - This gets carried into the external URL and self-signed certificate configs below
-gitlab_dn_prefix: 
-gitlab_dn_suffix:
-
-# URL of GitLabs installation - https is included since we set http to redirect to https below
-gitlab_external_url: "https://{{ gitlab_dn_prefix }}.{{ gitlab_dn_suffix }}/"
-
-# We can change where the git repos are stored - must NOT be a symlink
-gitlab_git_data_dir: "/var/opt/gitlab/git-data"
-
-# SSL Configuration
-gitlab_redirect_http_to_https: "true"
-gitlab_ssl_certificate: "/etc/gitlab/ssl/{{ gitlab_dn_prefix }}.{{ gitlab_dn_suffix }}.crt"
-gitlab_ssl_certificate_key: "/etc/gitlab/ssl/{{ gitlab_dn_prefix }}.{{ gitlab_dn_suffix }}.key"
-
-# SSL Self-signed Certificate Configuration
-gitlab_create_self_signed_cert: "true"
-gitlab_self_signed_cert_subj: "/CN={{ gitlab_dn_suffix }}"
-
-# LDAP Configuration
-gitlab_ldap_enabled: "false"
-gitlab_ldap_host: "example.com"
-gitlab_ldap_port: "389"
-gitlab_ldap_uid: "sAMAccountName"
-gitlab_ldap_method: "plain"
-gitlab_ldap_bind_dn: "CN=Username,CN=Users,DC=example,DC=com"
-gitlab_ldap_password: "password"
-gitlab_ldap_base: "DC=example,DC=com"
-
-# Timezone needs to be correct or Two-Factor Auth will fail
-gitlab_time_zone: "America/Chicago"
-
-# How long to keep backups - don't let disk space run out!
-gitlab_backup_keep_time: "604800"
-
-# Postfix Email Configuration
-# Make sure gitlab_email_from and gitlab_email_reply_to in below section is set to a valid email or 
-# O365 will error out with "not allowed to send mail as"
-smtp_host: 
-smtp_port: 587
-smtp_domain: 
-smtp_start_tls: true
-smtp_authuser:
-smtp_authpassword:
- 
-# GitLab Email Configuration
-# We are using the Postfix-mta role for email. GitLab config needs to be set for localhost/localdomain.
-# email_from and display_name should reflect service account email
-gitlab_email_enabled: "true"
-gitlab_email_host: "localhost"
-gitlab_email_port: "25"
-gitlab_email_domain: "localdomain"
-gitlab_email_authentication: "false"
-gitlab_email_starttls: "false"
-gitlab_email_from: 
-gitlab_email_display_name: 
-gitlab_email_reply_to:
