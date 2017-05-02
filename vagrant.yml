@@ -1,0 +1,10 @@
+---
+- hosts: default
+  sudo: yes
+  vars_files:
+    - my-vars.yml
+  
+  roles:
+    - { role: OULibraries.centos7, tags: ["centos7"] }
+    - { role: OULibraries.syslogng, tags: ["syslogng"] }
+    - { role: OULibraries.users, tags: ["users"] }

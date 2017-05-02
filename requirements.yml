@@ -1,0 +1,12 @@
+---
+- src: https://github.com/OULibraries/ansible-role-centos7
+  version: v2016-08-24.0
+  name: OULibraries.centos7
+
+- src: https://github.com/OULibraries/ansible-role-syslogng
+  version: master
+  name: OULibraries.syslogng
+
+- src: https://github.com/OULibraries/ansible-role-users
+  version: v2016-08-10.0
+  name: OULibraries.users
